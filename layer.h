@@ -3,22 +3,18 @@
 
 class layer{
 public:
-	void forward();
-	void backward();
+	virtual void forward(vector<Blob*> input, vector<Blob*> output);
+	virtual void backward(vector<Blob*> input, vector<Blob*> output);
 
 	vector<neuron*> neuronsPtr;
 };
 
-void layer::forward() {
-	for (int i = 0; i < neuronsPtr.size(); i++)
-	{
+void layer::forward(vector<Blob*> input, vector<Blob*> output) {
 
-	}
+
 }
 
-void layer::backward(){
-	for (int i = 0; i < neuronsPtr.size(); i++)
-	{
+void layer::backward(vector<Blob*> input, vector<Blob*> output){
 
-	}
+
 }

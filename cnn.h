@@ -1,9 +1,11 @@
+//先绕过lmdb，直接从图像进行训练。
 #include"layer.h"
 
-class cnn {
+class CNN {
 public:
 	void forward();
 	void backward();
+	CNN(string solverFileName);
 	void constructCNNFromPrototxt(FILE* prototxtFile);
 	void train();
 	void val();
@@ -17,30 +19,45 @@ public:
 	int valSamplesNum;
 	int batchSize;
 	int batchSizeCount;
+	vector<Blob*> dataBlock1;
+	vector<Blob*> dataBlock2;
+	vector<Blob*> tmp;
 };
 
-void cnn::forward()
+void CNN::forward()
 {
 	for (int i = 0; i < layersPtr.size(); i++)
 	{
-		layersPtr[i]->forward();
+		layersPtr[i]->forward(dataBlock1, dataBlock2);
+		tmp = dataBlock1; //置换一下，使得上句成立
+		dataBlock1 = dataBlock2;
+		dataBlock2 = tmp;
 	}
 }
 
-void cnn::backward()
+void CNN::backward()
 {
 	for (int i = layersPtr.size(); i > 0; i--)
 	{
-		layersPtr[i]->backward();
+		layersPtr[i]->backward(dataBlock1,dataBlock2);
+		tmp = dataBlock1; //置换一下，使得上句成立
+		dataBlock1 = dataBlock2;
+		dataBlock2 = tmp;
 	}
 }
 
-void cnn::constructCNNFromPrototxt(FILE* prototxtFile)
+CNN::CNN(string solverFileName)//通过slover文件构造CNN
+{
+	FILE* solverFile = fopen(solverFileName.c_str(), "r");
+	//今天写到这，不想写了，明天再写吧
+}
+
+void CNN::constructCNNFromPrototxt(FILE* prototxtFile)
 {
 	
 }
 
-void cnn::train()
+void CNN::train()
 {
 	batchSizeCount = 0;
 	for (int i = 0; i < maxEpochsNum; i++)
@@ -56,7 +73,7 @@ void cnn::train()
 	}
 }
 
-void cnn::val()
+void CNN::val()
 {
 	for (int i = 0; i < valSamplesNum; i++)
 	{

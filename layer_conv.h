@@ -2,5 +2,5 @@
 
 class layer_conv : public layer 
 {
-
+public:
 };

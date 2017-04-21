@@ -1,5 +1,4 @@
-#include<iostream>
-using namespace std;
+#include"Blob.h"
 class neuron{
 public:
 	inline void activeFunc();
