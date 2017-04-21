@@ -34,7 +34,7 @@ void layer_data::readImgs(vector<Blob*> input, vector<Blob*> output)
 	FILE* imgNameListFile = fopen(imgNameListName.c_str(), "r");
 	string imgName;
 
-	for(int i=0;i<batchSize;i++)//这个函数还存在的问题是：记录上一次读到的位置！！！！！这个必须得记录啊
+	for(int i=0;i<batchSize;i++)//?这个函数还存在的问题是：记录上一次读到的位置！！！！！这个必须得记录啊
 	{
 		if (fscanf(imgNameListFile,"%s %d\n",imgName.c_str()) == EOF)
 		{
@@ -43,8 +43,8 @@ void layer_data::readImgs(vector<Blob*> input, vector<Blob*> output)
 		}
 		else {
 			Mat img = imread(imgName);
-			(input[0]->data).push_back(img);//这样到底会不会将结果存在input中
+			(input[0]->data).push_back(img);
 		}
 	}
-	//写完了，也就剩上述两个问题了
+	//写完了，也就剩那一个打问号的问题了
 }
