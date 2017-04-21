@@ -1,7 +1,4 @@
-#include<iostream>
-#include<vector>
 #include"layer.h"
-using namespace std;
 
 class cnn {
 public:
